@@ -70,10 +70,6 @@ export default function Home() {
 					<div className="flex flex-col flex-1">
 						<div className="flex justify-between items-center">
 							<h1 className="text-2xl font-bold mt-6 mb-6 text-slate-300">Chat to your database</h1>
-							<a href="https://github.com/bayeru/chat-to-your-database" target="_blank" rel="noreferrer" className="flex">
-								<GithubIcon />
-								<h4 className="text-slate-300 ml-4">v0.1.0</h4>
-							</a>
 						</div>
 						{response?.error && response?.error !== "" && (
 							<p className="rounded-xl bg-red-500 text-white p-6 mb-8">{response.error}</p>

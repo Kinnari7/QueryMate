@@ -1,7 +1,7 @@
 import { Database } from "sqlite3";
 import fs from "fs";
 
-const sqlStr = fs.readFileSync("data/your_db.sql").toString().split(";");
+const sqlStr = fs.readFileSync("data/querymate.sql").toString().split(";");
 
 const db = new Database("database", (err) => {
 	if (err) {
@@ -13,8 +13,9 @@ const db = new Database("database", (err) => {
 
 db.serialize(() => {
 
-	db.run("PRAGMA foreign_keys = OFF");
-	db.run("BEGIN TRANSACTION");
+	db.run(`INSERT INTO customers (...) VALUES (...)`, (err) => {
+		if (err) console.error("Insert error:", err.message);
+	});
 
 	sqlStr.forEach((query) => {
 

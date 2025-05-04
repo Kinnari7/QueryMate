@@ -16,7 +16,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	});
 
 	const toolkit = new SqlToolkit(db);
-	const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY, temperature: 0 });
+	const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY, temperature: 0, modelName: "gpt-3.5-turbo" });
 	const executor = createSqlAgent(model, toolkit, { topK: 10, prefix:SQL_PREFIX, suffix: SQL_SUFFIX });	
 	const {query: prompt} = req.body;
 
@@ -44,13 +44,11 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		console.log(`Intermediate steps ${JSON.stringify(result.intermediateSteps, null, 2)}`);
 	} catch (e:any) {
-		console.log(e);		
+		console.log("error...",e);	
+		await datasource.destroy();	
 		response.error = "Server error. Try again with a different prompt.";
 		res.status(200).json(response);
 	}	
-
-	await datasource.destroy();
-	res.status(200).json(response);
 
 };
 
